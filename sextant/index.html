@@ -12,14 +12,14 @@
 
     <h4>Datum und Zeit</h4>
     <input id="date" type="date" value="2023-05-21" min="1723-02-17" max="2099-12-31" placeholder="Datum">
-    <input id="time" type="time" value="14:00:00" placeholder="Zeit">
+    <input id="time" type="time" value="21:00:00" placeholder="Zeit">
 
     <h4>Geographische Länge (O: +) und Breite (N: +)</h4>
     <input id="geolon" type="number" value="9.93" placeholder="Länge">
     <input id="geolat" type="number" value="53.53" placeholder="Breite">
 
-    <h4>Referenzstern (Name oder Rektaszension Deklination)</h4>
-    <input id="starpos" type="string" value="02h31m49.1s +89d15m50.8s" placeholder="Stern", maxlength="32">
+    <h4>Sternkoordinaten (Rektaszension Deklination)</h4>
+    <input id="starpos" type="string" value="04h35m55.24s +16d30m33.5s" placeholder="Aldebaran = 04h35m55s +16d30m">
 
     <br><br>
     <button id="convertbutton" py-click="convert()" disabled>Finde den Mond</button>

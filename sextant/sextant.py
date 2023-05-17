@@ -1,3 +1,8 @@
+# Licensed under a 3-clause BSD style license - see LICENSE.rst
+
+# Version 0.1 by Derek Homeier <dhomeie@gwdg.de>,
+# based on `coordinates-with-pyscript` by Erik Tollerud <erik.tollerud@gmail.com>
+
 # this is needed for conversions that need IERS data
 import pyodide_http
 import pyodide
@@ -44,11 +49,11 @@ def convert():
             warnings.filterwarnings("ignore", message=".*IERS [dt]a.*", category=AstropyWarning)
             mooncoo = coordinates.get_moon(obstime, obsloc, ephemeris='builtin')
     except Exception as e:
-        mout.write(f"Fehler in Mondposition: {e} - \t"
-                   f"Datum, Position: {datein.element.value} {timein.element.value}; {lonin} {latin}")
+        mout.write(f"Fehler in Mondposition: {e} - Datum, Position: "
+                   f"{datein.element.value} {timein.element.value}; {lonin} {latin}")
     else:
-        mout.write(f"Mondposition von {obsloc.lon:.3f} Länge {obsloc.lat:+.3f} Breite am {obstime}: "
-                   f"    {mooncoo.to_string('hmsdms', precision=2)}")
+        mout.write(f"Mondposition von {obsloc.lon:.3f} Länge {obsloc.lat:+.3f} Breite am "
+                   f"{obstime} (UTC): {mooncoo.to_string('hmsdms', precision=2)}")
 
     starcoo = None
     try:
@@ -72,4 +77,4 @@ def convert():
             mdis.write(f"Abstand zu Sternposition {starcoo.to_string('hmsdms', precision=1)}: "
                        f"    {moondis.to_string(precision=1)}")
         except Exception as e:
-            mdis.write(f"Fehler bei Distanzbestimmung zu {starcoo.to_string('hmsdms', precision=1)}: {e}")
+            mdis.write(f"Fehler bei Distanzbestimmung zu {starcoo.to_string('hmsdms')}: {e}")
