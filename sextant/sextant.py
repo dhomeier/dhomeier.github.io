@@ -39,6 +39,7 @@ starin = Element("starpos")
 mout = Element("mooncoo")
 mdis = Element("moondis")
 utime = Element("utctime")
+tdiff = Element("timediff")
 ebutton = Element("ephembutton")
 dbutton = Element("distbutton")
 tbutton = Element("utcbutton")
@@ -51,6 +52,9 @@ populate_dropdowns(refstar.element)
 ebutton.element.disabled = False
 dbutton.element.disabled = False
 tbutton.element.disabled = False
+
+loctime = '1761-01-15 19:55:00'
+
 
 def get_obsloc(lon=None, lat=None):
     if lon is None:
@@ -97,9 +101,10 @@ def ephem():
         # Filter warnings about dates out of range (ERFA outside of range 1900-2100)
         warnings.simplefilter("ignore", category=ErfaWarning)
         try:
-            obstime = Time(f"{datein.element.value} {timein.element.value}")
+            obstime = Time(f"{datein.element.value} {timein.element.value}") - obsloc.lon.deg * 4 * u.min
         except Exception as e:
-            mout.write(f"Fehler bei Datumseingabe: {e} \n{datein.element.value} {timein.element.value}")
+            mout.write(f"Fehler bei Datumseingabe für {datein.element.value} {timein.element.value} {e}")
+            return None
         else:
             mout.write(f"Datum, Zeit: {datein.element.value} {timein.element.value} {obstime}")
 
@@ -142,7 +147,7 @@ def utctime():
         utime.write(f"Fehler beim Lesen von Winkelabstand {stardis.element.value}: {e}")
         return
     starcoo = get_starcoo()
-    obsloc = get_obsloc(lon=-1.25)  # Setze Länge auf Inputwert 1d15m W
+    obsloc = get_obsloc(lon=-3.75)  # Setze Länge auf Inputwert 3d45m W
     if starcoo is not None and obsloc is not None:
         with warnings.catch_warnings():
             warnings.simplefilter("ignore", category=ErfaWarning)
@@ -154,5 +159,7 @@ def utctime():
             distances = mooncoords.separation(starcoo)
             idx = np.argmin(abs(distances - mydist))
             utime.write(f"Beste Monddistanz zu {starcoo.to_string('hmsdms', precision=0)} ist "
-                        f"{distances[idx].to_string(precision=0)} um *** {obstimes[idx]} *** "
+                        f"{distances[idx].to_string(precision=0)} um {obstimes[idx]} "
                         "(Greenwich Mean Time)")
+            tdiff.write(f"Differenz Weltzeit – Ortszeit = "
+                        f"{(obstimes[idx]-Time(loctime)).to_value('min'):.2f} Minuten")

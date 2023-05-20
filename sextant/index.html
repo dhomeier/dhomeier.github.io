@@ -10,12 +10,13 @@
 <body>
     <h1>Mondposition und Abstandsbestimmung zu Fixsternen</h1>
 
-    <h4>Datum und Zeit</h4>
+    <h3>I. Mondposition und Sternabstände zu gegebenem Ort und Zeit</h3>
+    <h4>Datum und Ortszeit</h4>
     <input id="date" type="date" value="1761-01-15" min="1723-02-17" max="2099-12-31" placeholder="Datum">
-    <input id="time" type="time" value="20:10:00" placeholder="Zeit">
+    <input id="time" type="time" value="19:55:00" placeholder="Zeit">
 
     <h4>Geographische Länge (O: +) und Breite (N: +)</h4>
-    <input id="geolon" type="number" value="0.00" placeholder="Länge" min="-180" max="181">
+    <input id="geolon" type="number" value="9.9" placeholder="Länge" min="-180" max="181">
     <input id="geolat" type="number" value="59.5333" placeholder="Breite" min="-90" max="90">
     <br><br>
     <button id="ephembutton" py-click="ephem()" disabled>Bestimme Mondephemeriden</button>
@@ -32,13 +33,17 @@
     <button id="distbutton" py-click="distanz(ephem())" disabled>Berechne Monddistanz</button>
     <br>
     <span id="moondis">Noch keine Sternposition bestimmt</span>
+    <br><br>
 
-    <h4>Gemessene Distanz Mond-Fixstern</h4>
+    <h3>II. Bestimmung der Weltzeit aus gemessenen Sternabständen</h3>
+    <b>Gemessene Distanz Mond-Fixstern: </b>
     <input id="stardis" type="string" value="" placeholder="1d00m00s">
     <br><br>
-    <button id="utcbutton" py-click="utctime()" disabled>Finde Weltzeit zu Monddistanz</button>
+    <button id="utcbutton" py-click="utctime()" disabled>Finde Weltzeit zur Monddistanz</button>
     <br><br>
-    <b id="utctime">Noch keine Monddistanz eingegeben</b>
+    <span id="utctime">Noch keine Monddistanz eingegeben</span>
+    <br>
+    <b id="timediff"></b>
 
     <py-config src="./pyscript.toml"></py-config>
     <py-script src="./sextant.py"></py-script>
