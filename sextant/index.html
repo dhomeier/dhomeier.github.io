@@ -11,6 +11,11 @@
     <h1>Mondposition und Abstandsbestimmung zu Fixsternen</h1>
 
     <h3>I. Mondposition und Sternabstände zu gegebenem Ort und Zeit</h3>
+    Im ersten Teil wird zu einer gemessenen wahren Ortszeit die berechnete Position
+    des Mondes angezeigt. Die bekannte (gemessene) geographische Breite und eine
+    angenommene geographische Länge gehen dabei in die Bestimmung der entsprechenden
+    Weltzeit und die scheinbare Verschiebung der Mondposition abhängig vom Standort
+    des Beobachters auf der Erde (Parallaxeneffekt) ein.
     <h4>Datum und Ortszeit</h4>
     <input id="date" type="date" value="1761-01-15" min="1723-02-17" max="2099-12-31" placeholder="Datum">
     <input id="time" type="time" value="19:55:00" placeholder="Zeit">
@@ -25,23 +30,36 @@
     <br><br>
 
     <h4>Sternkoordinaten</h4>
+    Im folgenden Schritt wird aus der oben vorausberechneten Mondposition der Winkelabstand
+    zu einem Referenzstern mit der Methode der sphärischen Dreiecke berechnet.
+    <p>
     <label for="refstar">Referenzstern:</label>
     <select name="refstar" id="refstar"></select>
 
     <input id="starpos" type="string" value=" " placeholder="Aldebaran = 04h35m55s +16d30m">
-    <br><br>
+    <p>
     <button id="distbutton" py-click="distanz(ephem())" disabled>Berechne Monddistanz</button>
     <br>
     <span id="moondis">Noch keine Sternposition bestimmt</span>
     <br><br>
 
     <h3>II. Bestimmung der Weltzeit aus gemessenen Sternabständen</h3>
+    Im zweiten Teil wird die obige Rechnung gleichsam umgekehrt, um für einen gegebenen
+    (gemessenen) Winkelabstand zum Referenzstern die am besten passende Weltzeit und
+    damit die zugehörige Zeitverschiebung zum Nullmeridian, also die geographische Länge,
+    zu finden. An Stelle des Aufsuchens der Distanzen in einer Tabelle wird aus minütlich
+    berechneten Positionen diejenige mit der geringsten Abweichung zur gemessenen Distanz
+    ausgegeben.
+    <p>
     <b>Gemessene Distanz Mond-Fixstern: </b>
     <input id="stardis" type="string" value="" placeholder="1d00m00s">
-    <br><br>
+    <p>
     <button id="utcbutton" py-click="utctime()" disabled>Finde Weltzeit zur Monddistanz</button>
-    <br><br>
+    <p>
     <span id="utctime">Noch keine Monddistanz eingegeben</span>
+    <p>
+    Die hier gefundene Zeitverschiebung lässt sich direkt in eine Länge umrechnen (1 Minute entspricht
+    15 Bogenminuten Länge / 4 Minuten entsprechen 1 Längengrad):
     <br>
     <b id="timediff"></b>
 
